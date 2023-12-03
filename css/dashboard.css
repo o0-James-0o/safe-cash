@@ -2,6 +2,10 @@
 
 /*-----------------------ROOT VARAIBLES-----------------------*/
 :root {
+    --color-red: #FF0000;
+    --color-green: #00BF63;
+    --color-green-dark: #01B65F;
+    --color-green-light: #00BF63;
     --color-primary: #7380ec;
     --color-danger: #ff7782;
     --color-success: #41f1b6;
@@ -213,7 +217,7 @@ aside .sidebar a:last-child {
 
 aside .sidebar a.active {
     background: var(--color-light);
-    color: var(--color-primary);
+    color: var(--color-green-light);
     margin-left: 0;
 }
 
@@ -221,16 +225,16 @@ aside .sidebar a.active:before{
     content: "";
     width: 6px;
     height: 100%;
-    background: var(--color-primary);
+    background: var(--color-green-dark);
 }
 
 aside .sidebar a.active span {
-    color: var(--color-primary);
+    color: var(--color-green-light);
     margin-left: calc(1rem - 3px);
 }
 
 aside .sidebar a:hover {
-    color: var(--color-primary);
+    color: var(--color-green-light);
 }
 
 aside .sidebar a:hover span {
@@ -331,11 +335,13 @@ main .insights svg circle {
 }
 
 main .insights .sales svg circle {
+    stroke: var(--color-red);
     stroke-dashoffset: -30;
     stroke-dasharray: 200;
 }
 
 main .insights .expenses svg circle {
+    stroke: var(--color-green);
     stroke-dashoffset: 20;
     stroke-dasharray: 80;
 }
@@ -438,7 +444,7 @@ main .recent-orders a {
 }
 
 .right .theme-toggler span.active {
-    background: var(--color-primary);
+    background: var(--color-green-light);
     color: white;
     border-radius: var(--border-radius-1);
 }
