@@ -335,13 +335,13 @@ main .insights svg circle {
 }
 
 main .insights .sales svg circle {
-    stroke: var(--color-red);
+    stroke: var(--color-green);
     stroke-dashoffset: -30;
     stroke-dasharray: 200;
 }
 
 main .insights .expenses svg circle {
-    stroke: var(--color-green);
+    stroke: var(--color-red);
     stroke-dashoffset: 20;
     stroke-dasharray: 80;
 }
@@ -483,6 +483,22 @@ main .recent-orders a {
     margin-bottom: 1rem;
 }
 
+.right .recent-updates .updates .profile-photo {
+    padding: 0.6rem;
+    color: var(--color-white);
+    border-radius: 50%;
+    background: var(--color-primary);
+    display: flex;
+}
+
+.right .recent-updates .updates .profile-photo.income {
+    background: var(--color-success);
+}
+
+.right .recent-updates .updates .profile-photo.expense {
+    background: var(--color-danger);
+}
+
 /* ================================================================= SALES ANALYTICS ================================================================= */
 .right .sales-analytics {
     margin-top: 2rem;
@@ -524,11 +540,11 @@ main .recent-orders a {
     display: flex;
 }
 
-.right .sales-analytics .item.offline .icon {
+.right .sales-analytics .item.output .icon {
     background: var(--color-danger);
 }
 
-.right .sales-analytics .item.customers .icon {
+.right .sales-analytics .item.input .icon {
     background: var(--color-success);
 }
 
