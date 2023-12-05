@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAFE CASH</title>
+    <!-- MATERIAL ICON -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="./assets/images/logo.png">
+                    <h2><span class="logo-1">SAFE</span> <span class="logo-2">CA&#x24;H</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a routerLink="/home" class="active">
+                    <span class="material-symbols-outlined">currency_exchange</span>
+                    <h3>Caixa</h3>
+                </a>
+                <a routerLink="/clientes">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                    <h3>Clientes</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">logout</span>
+                    <h3>Sair</h3>
+                </a>
+            </div>
+        </aside>
+        <!------------------------------------ END OF ASIDE -------------------------------------->
+        <div *ngIf="empresa">
+            <main>
+                <h1>Caixa</h1>
+
+                <div class="date">
+                    <input type="date">
+                </div>
+
+                <div class="insights">
+                    <div class="sales">
+                        <span class="material-symbols-outlined">analytics</span>
+                        <div class="middle">
+                            <div class="left">
+                                <h3>Entradas</h3>
+                                <h1>{{entrada}}</h1>
+                            </div>
+                            <div class="progress">
+                                <svg>
+                                    <circle cx='38' cy='38' r='36'></circle>
+                                </svg>
+                                <div class="number">
+                                    <p>1%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <small class="text-muted">Últimas 24 Horas</small>
+                    </div>
+                    <!------------------------------------ END OF SALES -------------------------------------->
+                    <div class="expenses">
+                        <span class="material-symbols-outlined">bar_chart</span>
+                        <div class="middle">
+                            <div class="left">
+                                <h3>Saídas</h3>
+                                <h1>{{saida}}</h1>
+                            </div>
+                            <div class="progress">
+                                <svg>
+                                    <circle cx='38' cy='38' r='36'></circle>
+                                </svg>
+                                <div class="number">
+                                    <p>99%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <small class="text-muted">Últimas 24 Horas</small>
+                    </div>
+                    <!------------------------------------ END OF EXPENSES -------------------------------------->
+                    <div class="income">
+                        <span class="material-symbols-outlined">stacked_line_chart</span>
+                        <div class="middle">
+                            <div class="left">
+                                <h3>Saldo Final</h3>
+                                <h1>{{saldo}}</h1>
+                            </div>
+                        </div>
+                        <small class="text-muted">Últimas 24 Horas</small>
+                    </div>
+                    <!------------------------------------ END OF INCOME -------------------------------------->
+                </div>
+                <!------------------------------------ END OF INSIGHTS -------------------------------------->
+
+                <div class="recent-orders">
+                    <h2>Relatório Transações</h2>
+                    <table mat-table [dataSource]="transacoes" *ngIf="!isLoadingTransacao" class="mat-elevation-z8">
+                        <ng-container matColumnDef="cod_transacao">
+                            <th mat-header-cell *matHeaderCellDef> Codigo de Transação </th>
+                            <td mat-cell *matCellDef="let element"> {{element.cod_transacao}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="data">
+                            <th mat-header-cell *matHeaderCellDef> Data </th>
+                            <td mat-cell *matCellDef="let element"> {{element.data | date}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="descricao">
+                            <th mat-header-cell *matHeaderCellDef> Descrição </th>
+                            <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="tipo">
+                            <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                            <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="valor">
+                            <th mat-header-cell *matHeaderCellDef> Valor </th>
+                            <td mat-cell *matCellDef="let element"> {{element.valor | currency}} </td>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </table>
+                </div>
+
+                <div class="recent-orders">
+                    <h2>Relatório de Despesas</h2>
+                    <table mat-table [dataSource]="despesas" *ngIf="!isLoadingDespesas">
+                        <ng-container matColumnDef="cod_despesa">
+                            <th mat-header-cell *matHeaderCellDef> Codigo da Despesa </th>
+                            <td mat-cell *matCellDef="let element"> {{element.cod_despesa}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="tipo">
+                            <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                            <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="nome">
+                            <th mat-header-cell *matHeaderCellDef> Nome </th>
+                            <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="valor">
+                            <th mat-header-cell *matHeaderCellDef> Valor </th>
+                            <td mat-cell *matCellDef="let element"> {{element.valor | currency}} </td>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumnsDespesas"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumnsDespesas;"></mat-row>
+                    </table>
+                </div>
+            </main>
+            <!------------------------------------ END OF MAIN -------------------------------------->
+
+            <div class="right">
+                <!--- END OF TOP --->
+                <div class="recent-updates">
+                    <h2>Atualizações recentes</h2>
+                    <div class="updates">
+                        <div class="update">
+                            <div class="profile-photo income">
+                                <span class="material-symbols-outlined">
+                                    arrow_right_alt
+                                </span>
+                            </div>
+                            <div class="message">
+                                <p><b>Entrada:</b> Registrou-se uma entrada de R$ 3.000,00 na categoria de sistemas web
+                                    no registro de caixa.</p>
+                                <small class="text-muted">2 Minutos Atrás</small>
+                            </div>
+                        </div>
+                        <div class="update">
+                            <div class="profile-photo expense">
+                                <span class="material-symbols-outlined">
+                                    arrow_left_alt
+                                </span>
+                            </div>
+                            <div class="message">
+                                <p><b>Saída:</b> Uma saída de R$ 1.000,00 foi lançada na categoria de alimentação no
+                                    registro de caixa.</p>
+                                <small class="text-muted">2 Minutos Atrás</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------------------------------------ END OF RECENT UPDATES -------------------------------------->
+                <div class="sales-analytics">
+                    <h2>Análise de dados</h2>
+                    <div class="item output">
+                        <div class="icon">
+                            <span class="material-symbols-outlined">
+                                restaurant
+                            </span>
+                        </div>
+                        <div class="right">
+                            <div class="info">
+                                <h3>ALIMENTAÇÃO</h3>
+                                <small class="text-muted">Últimas 24 Horas</small>
+                            </div>
+                            <h5 class="danger">-17%</h5>
+                            <h3>R$ 1100,00</h3>
+                        </div>
+                    </div>
+                    <div class="item input">
+                        <div class="icon">
+                            <span class="material-symbols-outlined">
+                                web
+                            </span>
+                        </div>
+                        <div class="right">
+                            <div class="info">
+                                <h3>SISTEMAS WEB</h3>
+                                <small class="text-muted">Últimas 24 Horas</small>
+                            </div>
+                            <h5 class="success">+25%</h5>
+                            <h3>R$ 849,00</h3>
+                        </div>
+                    </div>
+                    <div class="item input">
+                        <div class="icon">
+                            <span class="material-symbols-outlined">
+                                developer_mode
+                            </span>
+                        </div>
+                        <div class="right">
+                            <div class="info">
+                                <h3>SISTEMAS MOBILE</h3>
+                                <small class="text-muted">Últimas 24 Horas</small>
+                            </div>
+                            <h5 class="success">+35%</h5>
+                            <h3>R$ 1200,00</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!empresa">
+            <button class="regBtn" (click)="registrarEmpresa()">Registrar Empresa</button>
+        </div>
+        <div class="top">
+            <button id="menu-btn">
+                <span class="material-symbols-outlined">
+                    menu
+                </span>
+            </button>
+            <div class="theme-toggler">
+                <span class="material-symbols-outlined active">
+                    light_mode
+                </span>
+                <span class="material-symbols-outlined">
+                    dark_mode
+                </span>
+            </div>
+            <div class="profile">
+                <div class="info">
+                    <p>Olá, <b>{{user!.login}}</b></p>
+                    <small class="text-muted">{{user?.admin ? 'Admin' : 'Normal User'}}</small>
+                </div>
+                <div class="profile-photo">
+                    <img src="./assets/images/profile-1.jpg">
+                </div>
+                <div class="info" *ngIf="empresa">
+                    <p class="info-empresa">Empresa:</p>
+                    <small class="text-muted info-empresa">{{empresa.nome}}</small>
+                    <p class="info-empresa">Segmento:</p>
+                    <small class="text-muted info-empresa">{{empresa.segmento}}</small>
+                    <p class="info-empresa">CNPJ:</p>
+                    <small class="text-muted info-empresa">{{empresa.cnpj}}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="orders.js"></script>
+    <script src="animation.js"></script>
+</body>
+
+</html>
